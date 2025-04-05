@@ -1,6 +1,6 @@
 # Spec: Development Dockerization v0.0.1
 
-WIP: Brief description
+A set of rules for managing the dockerization of services defined in Uqido code-base repositories, with a focus on reproducibility and team autonomy.
 
 ## Dependencies
 
