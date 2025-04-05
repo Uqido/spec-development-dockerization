@@ -1,4 +1,4 @@
-# Spec: Secret References v0.0.1
+# Spec: Development Dockerization v0.0.1
 
 WIP: Brief description
 
