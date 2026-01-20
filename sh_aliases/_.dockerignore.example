@@ -1,0 +1,15 @@
+# Copy this file to .dockerignore in the base directory of your project
+#
+.git
+docker
+!docker/*entrypoint.sh
+.idea
+*~
+
+# Add this lines for a rails project
+coverage
+log
+node_modules
+public/packs
+public/packs-test
+tmp

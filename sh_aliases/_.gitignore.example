@@ -1,0 +1,4 @@
+# Merge this file into your repo .gitignore
+#
+.projectenv.local
+

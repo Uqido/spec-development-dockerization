@@ -1,0 +1,113 @@
+# -------------------------
+# Uqido docker functions v3.0.0
+#
+
+# Function console_name
+console_name() {
+  if [ -n "$ZSH_VERSION" ]; then
+    # assume Zsh
+    echo "zsh"
+  elif [ -n "$BASH_VERSION" ]; then
+    # assume Bash
+    echo "bash"
+  else
+    # assume something else
+    return 1
+  fi
+}
+
+# Function dk-root
+# return the current docker compose context path; defaults to the top level git root, fallbacks to the current
+# directory if we're not in a git repo. It may be overridden in the current shell by defining a DOCKER_ROOT
+# env var and possibly changing compose files references accordingly.
+dk-root() {
+  ([ ! -z ${DOCKER_ROOT:+x} ] && echo $DOCKER_ROOT) ||
+  (git rev-parse --show-toplevel 2> /dev/null) ||
+  pwd
+}
+
+# Function read_variable
+# Read env variable from file and return its value
+# Specify variable name and filename
+read_variable() {
+  VARIABLE=$(grep -w $1 $2 2> /dev/null | xargs)
+
+  case $(console_name) in
+    bash)
+      IFS="=" read -ra VARIABLE <<< "$VARIABLE"
+      [ -z "$VARIABLE" ] && return 1
+      echo ${VARIABLE[1]}
+      ;;
+
+    zsh)
+      IFS="=" read -rA VARIABLE <<< "$VARIABLE"
+      [ -z "$VARIABLE" ] && return 1
+      echo ${VARIABLE[2]}
+      ;;
+
+    *)
+      echo "Unsupported shell"
+      return 1
+      ;;
+  esac
+}
+
+# Function dk-active-project
+# return the current project to work with.
+# defaults to the down-cased git remote origin basename, or
+# the dk-root basename if no such remote exists.
+# It may be overridden in the current shell by, in order of precedence:
+#   - setting DOCKER_ACTIVE_PROJECT env var
+#   - specifying DOCKER_ACTIVE_PROJECT variable in .projectenv.local file (in the project root directory)
+dk-active-project() {
+  ([ ! -z ${DOCKER_ACTIVE_PROJECT:+x} ] && echo $DOCKER_ACTIVE_PROJECT) ||
+  (read_variable DOCKER_ACTIVE_PROJECT $(dk-root)/.projectenv.local) ||
+  (basename -s .git $(git config --get remote.origin.url 2> /dev/null || dk-root) | tr A-Z a-z)
+}
+
+# Function dk-service-name
+# return the current docker compose primary service name; defaults to $(dk-active-project)
+# It may be overridden in the current shell by, in order of precedence:
+#   - setting DOCKER_SERVICE_NAME env var
+#   - specifying DOCKER_SERVICE_NAME variable in .projectenv.local file (in the project root directory)
+dk-service-name() {
+  ([ ! -z ${DOCKER_SERVICE_NAME:+x} ] && echo $DOCKER_SERVICE_NAME) ||
+  (read_variable DOCKER_SERVICE_NAME $(dk-root)/.projectenv.local) ||
+  (echo $(dk-active-project))
+}
+
+# Function dk-compose-dev-path
+# return the development docker compose path; defaults to docker/compose.development.yaml
+# The compose file may be overridden in the current shell by, in order of precedence:
+#   - setting DOCKER_COMPOSE_DEV_FILE env var
+#   - specifying DOCKER_COMPOSE_DEV_FILE variable in .projectenv.local file (in the project root directory)
+dk-compose-dev-path() {
+  ([ ! -z ${DOCKER_COMPOSE_DEV_FILE:+x} ] && echo $DOCKER_COMPOSE_DEV_FILE) ||
+  (read_variable DOCKER_COMPOSE_DEV_FILE $(dk-root)/.projectenv.local) ||
+  (echo docker/compose.development.yaml)
+}
+
+# Function dk-compose-test-path
+# return the test docker compose path; defaults to docker/compose.test.yaml
+# The compose file may be overridden in the current shell by, in order of precedence:
+#   - setting DOCKER_COMPOSE_TEST_FILE env var
+#   - specifying DOCKER_COMPOSE_TEST_FILE variable in .projectenv.local file (in the project root directory)
+dk-compose-test-path() {
+  ([ ! -z ${DOCKER_COMPOSE_TEST_FILE:+x} ] && echo $DOCKER_COMPOSE_TEST_FILE) ||
+  (read_variable DOCKER_COMPOSE_TEST_FILE $(dk-root)/.projectenv.local) ||
+  (echo docker/compose.test.yaml)
+}
+
+# Function dk-compose-dev
+# run the development docker compose located at dk-compose-dev-path
+dk-compose-dev() {
+  echo -e "  Compose file: $(dk-compose-dev-path)\n"
+  DOCKER_UID=$(id -u) DOCKER_GID=$(id -g) docker compose -f $(dk-compose-dev-path) "$@"
+}
+
+# Function dk-compose-test
+# run the test docker compose located at dk-compose-test-path
+dk-compose-test() {
+  echo -e "  Compose file: $(dk-compose-test-path)\n"
+  DOCKER_UID=$(id -u) DOCKER_GID=$(id -g) docker compose -f $(dk-compose-test-path) "$@"
+}

@@ -1,0 +1,29 @@
+# -------------------------
+# Uqido docker aliases v3.0.0
+#
+
+source $(dirname ${BASH_SOURCE[0]:-${(%):-%x}})/sh_functions.v3
+
+# Compose projects aliases
+
+alias dk-build='dk-compose-dev build'
+alias dk-up='dk-compose-dev up $(dk-service-name)'
+alias dk-down='dk-compose-dev down'
+alias dk-run='dk-compose-dev run --rm $(dk-service-name)'
+alias dk-exec='dk-compose-dev exec $(dk-service-name)'
+alias dk-prune='dk-compose-dev rm'
+alias dk-ps='dk-compose-dev ps'
+alias dk-bash='dk-exec bash'
+alias dk-logs='dk-compose-dev logs'
+
+alias dk-build-test='dk-compose-test build'
+alias dk-run-test='dk-compose-test run --rm $(dk-service-name)'
+alias dk-exec-test='dk-compose-test exec $(dk-service-name)'
+alias dk-up-test='dk-compose-test up $(dk-service-name)'
+alias dk-down-test='dk-compose-test down'
+alias dk-prune-test='dk-compose-test rm'
+alias dk-ps-test='dk-compose-test ps'
+alias dk-bash-test='dk-run-test bash'
+alias dk-test='dk-run-test /usr/local/bin/test.sh'
+alias dk-lint='dk-run-test /usr/local/bin/lint.sh'
+alias dk-logs-test='dk-compose-test logs'

@@ -34,7 +34,6 @@ Repositories adopting this spec **shall** have the following directory structure
       * `lint.sh`: the shell script executing the linting suite, accepting the project lint framework parameters (see `dk-lint`) 
 
 This specification includes a set of shell scripts and aliases—located in the `sh_aliases` directory—that provide common Docker operations for building and running repositories that adopt this spec.
-These operations cover both basic tasks such as build, up, test, and lint, as well as optional, stack-specific commands for commonly used technologies.<br>
 See the sh_aliases README for distribution and usage details.
 
 The project README **shall** have a setup section with instructions to *at least* test, run and lint the code-base.<br>
