@@ -18,8 +18,8 @@ Repositories adopting this spec should have the following directory structure:
   * `.dockerignore`
   * `docker/`
     * `docker-bake.hcl`: the docker bake file (optional)
-    * `compose.test.yml`: the test compose file
-    * `compose.development.yml`: the development compose file
+    * `compose.test.yaml`: the test compose file
+    * `compose.development.yaml`: the development compose file
     * `bin/`
       * `test.sh`: the shell script executing the test suite
       * `lint.sh`: the shell script executing the linting suite
