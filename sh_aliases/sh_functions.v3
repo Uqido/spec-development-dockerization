@@ -115,10 +115,14 @@ dk-compose-test() {
 # Function dk-build-cmd
 # run docker build or docker buildx bake if bake file exists
 dk-build-cmd() {
+  local compose_cmd="$1"
+  shift
   if [ -f "$(dk-root)/docker/docker-bake.hcl" ]; then
+    local target="development"
+    [ "$compose_cmd" = "dk-compose-test" ] && target="test"
     echo -e "  Bake file: docker/docker-bake.hcl\n"
-    (cd "$(dk-root)" && docker buildx bake --allow=fs.read=.. -f docker/docker-bake.hcl development)
+    (cd "$(dk-root)" && docker buildx bake --allow=fs.read=.. -f docker/docker-bake.hcl "$target" "$@")
   else
-    "$1" build
+    "$compose_cmd" build "$@"
   fi
 }

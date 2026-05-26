@@ -128,4 +128,4 @@ If everything is configured correctly, you should see a confirmation message fro
 
 # Docker Bake support
 
-The commands `dk-build` will use `docker bake` if a config file is found in `docker/docker-bake.hcl`.
+The commands `dk-build` and `dk-build-test` will use `docker bake` if a config file is found in `docker/docker-bake.hcl`, using `development` and `test` targets respectively. Additional arguments are forwarded to the build command.
