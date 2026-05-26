@@ -111,3 +111,14 @@ dk-compose-test() {
   echo -e "  Compose file: $(dk-compose-test-path)\n"
   DOCKER_UID=$(id -u) DOCKER_GID=$(id -g) docker compose -f $(dk-compose-test-path) "$@"
 }
+
+# Function dk-build-cmd
+# run docker build or docker buildx bake if bake file exists
+dk-build-cmd() {
+  if [ -f "$(dk-root)/docker/docker-bake.hcl" ]; then
+    echo -e "  Bake file: docker/docker-bake.hcl\n"
+    (cd "$(dk-root)" && docker buildx bake --allow=fs.read=.. -f docker/docker-bake.hcl development)
+  else
+    "$1" build
+  fi
+}
