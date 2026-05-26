@@ -27,6 +27,7 @@ Repositories adopting this spec **shall** have the following directory structure
 * `<project_root>/`
   * `.dockerignore`
   * `docker/`
+    * `docker-bake.hcl`: the docker bake file (optional)
     * `compose.test.yml`: the test compose file
     * `compose.development.yml`: the development compose file
     * `bin/`
