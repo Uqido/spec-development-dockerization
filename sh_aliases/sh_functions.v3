@@ -116,6 +116,10 @@ dk-compose-test() {
 # run docker build or docker buildx bake if bake file exists
 dk-build-cmd() {
   local compose_cmd="$1"
+  if [ -z "$compose_cmd" ]; then
+    echo "Usage: dk-build-cmd <dk-compose-dev|dk-compose-test> [build args...]" >&2
+    return 2
+  fi
   shift
   if [ -f "$(dk-root)/docker/docker-bake.hcl" ]; then
     local target="development"
