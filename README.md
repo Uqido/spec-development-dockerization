@@ -1,4 +1,4 @@
-# Spec: Development Dockerization v0.0.1
+# Spec: Development Dockerization v1.0.0
 
 A set of rules for managing the dockerization of services defined in Uqido code-base repositories, with a focus on *reproducibility* and team *autonomy*.
 
@@ -27,7 +27,7 @@ Repositories adopting this spec **shall** have the following directory structure
 * `<project_root>/`
   * `.dockerignore`
   * `docker/`
-    * `compose.test.yml`: the test compose file
+    * `compose.test.yml`fff: the test compose file
     * `compose.development.yml`: the development compose file
     * `bin/`
       * `test.sh`: the shell script executing the test suite, accepting the project test framework parameters (see `dk-test`) 
