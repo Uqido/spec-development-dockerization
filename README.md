@@ -28,7 +28,7 @@ Repositories adopting this spec **shall** have the following directory structure
   * `.dockerignore`
   * `docker/`
     * `docker-bake.hcl`: the docker bake file (optional)
-    * `compose.test.yaml`fff: the test compose file
+    * `compose.test.yaml`: the test compose file
     * `compose.development.yaml`: the development compose file
     * `bin/`
       * `test.sh`: the shell script executing the test suite, accepting the project test framework parameters (see `dk-test`) 

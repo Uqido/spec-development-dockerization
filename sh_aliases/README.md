@@ -14,6 +14,13 @@ $ echo ". ~/<path-to-sh-aliases>/sh_aliases.v3" >> ~/.profile
 $ echo "source ~/<path-to-sh-aliases>/sh_aliases.v3" >> ~/.zshrc
 ```
 
+
+# Docker Bake support
+
+The commands `dk-build` and `dk-build-test` will use `docker buildx bake` if a config file is found in `docker/docker-bake.hcl`.
+Additional arguments are forwarded to the build command.
+
+
 # Setup for Windows
 
 In order to setup docker and the aliases on windows, you should setup WSL and install Docker desktop.
@@ -115,7 +122,3 @@ docker run hello-world
 ```
 
 If everything is configured correctly, you should see a confirmation message from Docker.
-
-# Docker Bake support
-
-The commands `dk-build` and `dk-build-test` will use `docker buildx bake` if a config file is found in `docker/docker-bake.hcl`. Additional arguments are forwarded to the build command.
