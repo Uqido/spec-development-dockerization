@@ -14,20 +14,6 @@ $ echo ". ~/<path-to-sh-aliases>/sh_aliases.v3" >> ~/.profile
 $ echo "source ~/<path-to-sh-aliases>/sh_aliases.v3" >> ~/.zshrc
 ```
 
-# Directory structure
-
-Repositories adopting this spec should have the following directory structure:
-
-* `<project_root>/`
-  * `.dockerignore`
-  * `docker/`
-    * `docker-bake.hcl`: the docker bake file (optional)
-    * `compose.test.yaml`: the test compose file
-    * `compose.development.yaml`: the development compose file
-    * `bin/`
-      * `test.sh`: the shell script executing the test suite
-      * `lint.sh`: the shell script executing the linting suite
-
 # Setup for Windows
 
 In order to setup docker and the aliases on windows, you should setup WSL and install Docker desktop.
