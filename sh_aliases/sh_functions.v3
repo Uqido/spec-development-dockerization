@@ -120,12 +120,12 @@ dk-build-cmd() {
     echo "Usage: dk-build-cmd <dk-compose-dev|dk-compose-test> [build args...]" >&2
     return 2
   fi
+
   shift
+
   if [ -f "$(dk-root)/docker/docker-bake.hcl" ]; then
-    local target="development"
-    [ "$compose_cmd" = "dk-compose-test" ] && target="test"
     echo -e "  Bake file: docker/docker-bake.hcl\n"
-    (cd "$(dk-root)" && docker buildx bake --allow=fs.read=.. -f docker/docker-bake.hcl "$target" "$@")
+    (cd "$(dk-root)" && docker buildx bake -f docker/docker-bake.hcl "$@")
   else
     "$compose_cmd" build "$@"
   fi
