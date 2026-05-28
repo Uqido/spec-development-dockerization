@@ -1,4 +1,4 @@
-# Spec: Development Dockerization v1.0.0
+# Spec: Development Dockerization v1.1.0
 
 A set of rules for managing the dockerization of services defined in Uqido code-base repositories, with a focus on *reproducibility* and team *autonomy*.
 
