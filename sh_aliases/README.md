@@ -1,3 +1,7 @@
+# Prerequisites
+
+WIP: read the spec, install docker with docker-compose and docker-buildx plugins; if the adopting repo uses the shared digital ocean image registry, download a read (or readwrite, to push) docker config from the DO web gui.  
+
 # Setup global aliases
 
 To automatically source the aliases, add them in your .bashrc, .profile or .zshrc file:
